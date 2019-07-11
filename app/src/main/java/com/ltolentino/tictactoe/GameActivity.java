@@ -13,12 +13,6 @@ import static com.ltolentino.tictactoe.utilities.StringUtility.isNullOrEmpty;
 
 public class GameActivity extends AppCompatActivity {
 
-    private static final String GAME_BEGIN_DIALOG_TAG = "game_dialog_tag";
-
-    private static final String GAME_END_DIALOG_TAG = "game_end_dialog_tag";
-
-    private static final String NO_WINNER = "No one";
-
     private GameViewModel gameViewModel;
 
     @Override
@@ -31,7 +25,7 @@ public class GameActivity extends AppCompatActivity {
         GameBeginDialog dialog = GameBeginDialog.
                 newInstance(this);
         dialog.show(getSupportFragmentManager(),
-                GAME_BEGIN_DIALOG_TAG);
+                getString(R.string.GAME_BEGIN_DIALOG_TAG));
     }
 
     public void onPlayersSet(String player1, String player2) {
@@ -44,7 +38,7 @@ public class GameActivity extends AppCompatActivity {
 
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
 
-        gameViewModel.init(player1, player2);
+        gameViewModel.init(player1, player2,this);
         activityGameBinding.setGameViewModel(
                 gameViewModel);
         setUpOnGameEndListener();
@@ -58,10 +52,10 @@ public class GameActivity extends AppCompatActivity {
 
     public void onGameWinnerChanged(Player winner) {
         String winnerName = winner ==
-                null || isNullOrEmpty(winner.Name) ? NO_WINNER : winner.Name;
+                null || isNullOrEmpty(winner.Name) ? getString(R.string.NO_WINNER) : winner.Name;
         GameEndDialog dialog = GameEndDialog.
                 newInstance(this, winnerName);
         dialog.show(getSupportFragmentManager(),
-                GAME_END_DIALOG_TAG);
+                getString(R.string.GAME_END_DIALOG_TAG));
     }
 }
